@@ -11,56 +11,28 @@ namespace Menutest
 {
     internal class Game
     {
-        private string prompt = "Hello Player!!! what's your choice?";
-        private string[] options = { "Play", "About", "Exit" };
-        private int selectedindex = 0;
+        private string prompt =@"
+'     ___                                   
+'    / (_)                                  
+'   |      __   _  _  _|_  __,   __ _|_  ,  
+'   |     /  \_/ |/ |  |  /  |  /    |  / \_
+'    \___/\__/   |  |_/|_/\_/|_/\___/|_/ \/ 
+'                                           
+'    
+
+" +
+            "Hello User!!! what's your choice?";
+        private string[] options = { "Phonebook","Game","About", "Exit" };
         public Game()
         {
+            BackgroundColor = ConsoleColor.Black;
+            ForegroundColor = ConsoleColor.White;
             Console.Clear();
-            ConsoleKeyInfo keypress = new ConsoleKeyInfo();
-            Menu menu = new Menu(prompt, options, selectedindex);
-            menu.Displayops();
+            //ConsoleKeyInfo keypress = new ConsoleKeyInfo();
+            //id 0 for main menu
+            Menu menu = new Menu(prompt, options,0,0);
+            menu.DisplayOps();
 
-            while (keypress.Key != ConsoleKey.Enter)
-            {
-                keypress = ReadKey();
-                if (keypress.Key == ConsoleKey.UpArrow)
-                {
-                    selectedindex--;
-                }
-                else if (keypress.Key == ConsoleKey.DownArrow)
-                {
-                    selectedindex++;
-
-                }
-                
-                if (selectedindex > options.Length - 1)
-                {
-                    selectedindex = 0;
-                }
-                else if (selectedindex < 0)
-                {
-                    selectedindex = options.Length - 1;
-                }
-                else
-                {
-                    WriteLine("ALl set");
-                }
-
-                Console.Clear();
-
-                menuplay();
-
-            }
-            Gamenext g = new Gamenext(selectedindex);
-            void menuplay()
-            {
-                menu = new Menu(prompt, options, selectedindex);
-                menu.Displayops();
-            }
-
-           
-            //ReadKey(true);
         }
 
     }

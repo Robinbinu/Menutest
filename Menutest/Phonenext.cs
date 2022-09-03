@@ -3,36 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using static System.Console;
 
 namespace Menutest
 {
-    internal class Gamenext
+    internal class Phonenext
     {
-        private string[] options = { "P","G", "A", "E" };
-        public Gamenext(int selectedindex)
+        string choice = "y";
+           private string[] options = { "New", "All","Search","Exit" };
+        public Phonenext(int selectedindex)
         {
 
-            if (options[selectedindex] == "P")
+            if (options[selectedindex] == "New")
             {
                 Console.Clear();
                 //WriteLine("Starting game!!!");
-                Phonebook phonebook = new Phonebook();
-                ReadKey(true);
+                WriteLine(":::New Contact:::");
+                do
+                {
+                    Console.Write("Contact Name:");
+                    ReadLine();
+                   // WriteLine("");
+                    Console.Write("Contact Number:");
+                    ReadLine();
+                    //WriteLine("");
+                    Console.Write("Do you want to add another contact? (y/n)");
+                    choice=ReadLine();
+                   // WriteLine("");
+
+                } while (choice == "y");
+
+                //ReadKey(true);
                 menuplay1();
-                
+
 
             }
-            else if (options[selectedindex] =="G")
-            {
-                Console.Clear();
-                WriteLine(":)");
-                WriteLine(System.DateTime.Now);
-                ReadKey(true);
-                menuplay1();
-            }
-            else if (options[selectedindex] == "A")
+            else if (options[selectedindex] == "All")
             {
                 Console.Clear();
                 WriteLine(@"Developed by 
@@ -69,20 +75,25 @@ namespace Menutest
                 menuplay1();
 
             }
+            else if (options[selectedindex] == "Search")
+            {
+                WriteLine("Ready to search");
+                ReadKey();
+                menuplay1();
+            }
             else
             {
                 Console.Clear();
-                WriteLine("Byeeeee\n press any key to exit :(");
-                //Application.Exit();
-                ReadKey(true);
-                //Console.Beep(1000,1000);
-                Environment.Exit(0);
-                Console.Clear();
+                Game game = new Game();
+                //Console.Beep(1000,1000
             }
             void menuplay1()
             {
-                Game g = new Game();
+                Console.Clear();
+                Phonebook phonebook = new Phonebook();
+
             }
         }
     }
-}
+    }
+
