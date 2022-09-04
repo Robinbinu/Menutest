@@ -25,6 +25,7 @@ namespace Menutest
         private string[] options = { "Phonebook","Game","About", "Exit" };
         public Game()
         {
+            WriteLine("Commit test for github");
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
             Console.Clear();

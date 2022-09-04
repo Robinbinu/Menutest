@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +12,6 @@ namespace Menutest
         static void Main(string[] args)
         {
             Console.Title="PT-Assignment";
-            WriteLine("Hi");
-            Game game = new Game();
     }
 }
 }
