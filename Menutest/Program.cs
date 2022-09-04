@@ -12,8 +12,8 @@ namespace Menutest
         static void Main(string[] args)
         {
             Console.Title="PT-Assignment";
-            //WriteLine("Hi");
-        Game game = new Game();
+            WriteLine("Hi");
+            Game game = new Game();
     }
 }
 }
