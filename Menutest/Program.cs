@@ -13,6 +13,7 @@ namespace Menutest
         {
             Console.Title="PT-Assignment";
             Game game = new Game();
+            ReadKey();
 
         }
     }
