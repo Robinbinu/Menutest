@@ -22,7 +22,7 @@ namespace Menutest
 
 " +
             "Hello User!!! what's your choice?";
-        private string[] options = { "Phonebook","Game","About", "Exit" };
+        private string[] options = {"CGPA","Phonebook","Game","About", "Exit" };
         public Game()
         {
             WriteLine("Commit test for github");

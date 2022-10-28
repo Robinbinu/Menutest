@@ -10,11 +10,17 @@ namespace Menutest
 {
     internal class Gamenext
     {
-        private string[] options = { "P","G", "A", "E" };
+        private string[] options = { "C","P","G", "A", "E" };
         public Gamenext(int selectedindex)
         {
-
-            if (options[selectedindex] == "P")
+            if (options[selectedindex] == "C")
+            {
+                Console.Clear();
+                CGPA cGPA = new CGPA();
+                ReadKey(true);
+                menuplay1();
+            }
+            else if (options[selectedindex] == "P")
             {
                 Console.Clear();
                 //WriteLine("Starting game!!!");
