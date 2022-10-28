@@ -107,8 +107,8 @@ namespace Menutest
         {
             string[] Depts = { "CSE", "ECE", "EIE", "CHE", "MEC" };
             string prompt = "Enter your Department:";
-            Menu menu = new Menu(prompt,Depts, 0, 0);
-           menu.DisplayOps();
+            //Menu menu = new Menu(prompt,Depts, 0, 0);
+           //menu.DisplayOps();
             WriteLine("Enter your Dept:");
             Dept = ReadLine();
             WriteLine("Enter your Semester:");
