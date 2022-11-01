@@ -41,7 +41,9 @@ namespace Menutest
             else if (options[selectedindex] == "All")
             {
                 Console.Clear();
-                WriteLine(@"Developed by 
+                WriteLine(@"
+
+  Developed by 
 
 '   __       __                                                              __ 
 '  /  \     /  |                                                            /  |

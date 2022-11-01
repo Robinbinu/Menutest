@@ -12,6 +12,8 @@ namespace Menutest
         static void Main(string[] args)
         {
             Console.Title="PT-Assignment";
+            Console.WindowHeight = LargestWindowHeight;
+            Console.WindowWidth = LargestWindowWidth;
             Game game = new Game();
             ReadKey();
 

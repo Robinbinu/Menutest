@@ -11,21 +11,27 @@ namespace Menutest
 {
     internal class Game
     {
-        private string prompt =@"
-'     ___                                   
-'    / (_)                                  
-'   |      __   _  _  _|_  __,   __ _|_  ,  
-'   |     /  \_/ |/ |  |  /  |  /    |  / \_
-'    \___/\__/   |  |_/|_/\_/|_/\___/|_/ \/ 
-'                                           
-'    
+        private string prompt = @"
+
+      ___           ___           ___           ___     
+     /__/\         /  /\         /__/\         /__/\    
+    |  |::\       /  /:/_        \  \:\        \  \:\   
+    |  |:|:\     /  /:/ /\        \  \:\        \  \:\  
+  __|__|:|\:\   /  /:/ /:/_   _____\__\:\   ___  \  \:\ 
+ /__/::::| \:\ /__/:/ /:/ /\ /__/::::::::\ /__/\  \__\:\
+ \  \:\~~\__\/ \  \:\/:/ /:/ \  \:\~~\~~\/ \  \:\ /  /:/
+  \  \:\        \  \::/ /:/   \  \:\  ~~~   \  \:\  /:/ 
+   \  \:\        \  \:\/:/     \  \:\        \  \:\/:/  
+    \  \:\        \  \::/       \  \:\        \  \::/   
+     \__\/         \__\/         \__\/         \__\/    
+   
 
 " +
             "Hello User!!! what's your choice?";
         private string[] options = {"CGPA","Phonebook","Game","About", "Exit" };
         public Game()
         {
-            WriteLine("Commit test for github");
+            //WriteLine("Commit test for github");
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
             Console.Clear();

@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
+using System.IO;
+using System.Text;
 using static System.Console;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Menutest
 {
     internal class CGPA
     {
+        public string Dept, sem;
+        public ArrayList CSE1, CSE2, CSE3, CSE4, CSE5, CSE6, CSE7, CSE8, temp;
+        public float[] CPCSE1, CPCSE2, CPCSE3, CPCSE4, CPCSE5, CPCSE6, CPCSE7, CPCSE8;
+
+
         public CGPA()
         {
-            ArrayList CSE1, CSE2, CSE3, CSE4, CSE5, CSE6, CSE7, CSE8;
-            float[] CPCSE1, CPCSE2, CPCSE3, CPCSE4, CPCSE5, CPCSE6, CPCSE7, CPCSE8;
+
 
 
             Subjects(out CSE1, out CSE2, out CSE3, out CSE4, out CSE5, out CSE6, out CSE7, out CSE8);
             Scores(out CPCSE1, out CPCSE2, out CPCSE3, out CPCSE4, out CPCSE5, out CPCSE6, out CPCSE7, out CPCSE8);
 
             ArrayList temp = new ArrayList();
-            string Dept, sem;
-            getinput(out Dept, out sem);
-            temp = checkcondition(CSE1, CPCSE1, CSE2, CPCSE2, CSE3, CPCSE3, CSE4, CPCSE4, CSE5, CPCSE5, CSE6, CPCSE6, CSE7, CPCSE7, CSE8, CPCSE8, temp, Dept, sem);
+            //getinput(out Dept, out sem);
+            //temp = checkcondition(CSE1, CPCSE1, CSE2, CPCSE2, CSE3, CPCSE3, CSE4, CPCSE4, CSE5, CPCSE5, CSE6, CPCSE6, CSE7, CPCSE7, CSE8, CPCSE8, temp, Dept, sem);
 
         }
 
@@ -33,7 +36,7 @@ namespace Menutest
             CPCSE5 = new float[] { 3f, 3f, 3f, 4f, 3f, 1.5f, 1.5f, 0f };
             CPCSE6 = new float[] { 2f, 3f, 3f, 4f, 3f, 3f, 1.5f, 1.5f };
             CPCSE7 = new float[] { 3f, 4f, 4f, 3f, 3f, 1.5f, 1f, 0f };
-            CPCSE8 = new float[] { 2f, 2f, 1f, 2f, 8f};
+            CPCSE8 = new float[] { 2f, 2f, 1f, 2f, 8f };
         }
 
         private static void Subjects(out ArrayList CSE1, out ArrayList CSE2, out ArrayList CSE3, out ArrayList CSE4, out ArrayList CSE5, out ArrayList CSE6, out ArrayList CSE7, out ArrayList CSE8)
@@ -51,6 +54,7 @@ namespace Menutest
 
         private static ArrayList checkcondition(ArrayList CSE1, float[] CPCSE1, ArrayList CSE2, float[] CPCSE2, ArrayList CSE3, float[] CPCSE3, ArrayList CSE4, float[] CPCSE4, ArrayList CSE5, float[] CPCSE5, ArrayList CSE6, float[] CPCSE6, ArrayList CSE7, float[] CPCSE7, ArrayList CSE8, float[] CPCSE8, ArrayList temp, string Dept, string sem)
         {
+            WriteLine($"{Dept} {sem}");
             switch (sem)
             {
                 case "1" when Dept == "CSE":
@@ -76,12 +80,12 @@ namespace Menutest
             return temp;
         }
 
-        private static ArrayList CalculateGPA(ArrayList CSE4, float[] CPCSE4, string Dept, string sem)
+        private static ArrayList CalculateGPA(ArrayList CSE4, float[] CPCSE, string Dept, string sem)
         {
             ArrayList temp;
             Console.WriteLine($"You belong to Department of {Dept}\nYou are in semester {sem}\n\n");
             temp = CSE4;
-            Char[] grade = new Char[temp.Count];
+            string[] grade = new string[temp.Count];
             int[] score = new int[temp.Count];
             Getgrade(temp, grade, score);
             WriteLine();
@@ -94,29 +98,111 @@ namespace Menutest
             //var end
             for (int i = 0; i < temp.Count; i++)
             {
-                gpaNUM = CPCSE4[i] * score[i] + gpaNUM;
-                gpaDEN = CPCSE4[i] + gpaDEN;
+                gpaNUM = CPCSE[i] * score[i] + gpaNUM;
+                gpaDEN = CPCSE[i] + gpaDEN;
             }
             GPA = gpaNUM / gpaDEN;
 
-            WriteLine("\n\n\n\nGPA is " + GPA);
-            return temp;
+            WriteLine("\n\nGPA is " + GPA + "\n\n");
+            string ch = "N";
+            WriteLine("Do you want to export your GPA results?\n(Y/N):");
+            ch = ReadLine();
+            ch = ch.Trim();
+            if (ch.Equals("Y", StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    // Create an instance of StreamReader to read from a file.
+                    // The using statement also closes the StreamReader.
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"/GPA.txt";
+                       
+                    if (File.Exists(path))
+                    {
+                        WriteLine("file already exists in " + path);
+                        Write("Do you want to overwrite?:");
+                        ch = ReadLine();
+
+                        if (ch.Equals("Y", StringComparison.OrdinalIgnoreCase))
+                        {
+                            writeandreadtofile(Dept, sem, temp, CPCSE, grade, score, GPA, path);
+                        }
+                        else if (ch.Equals("N", StringComparison.OrdinalIgnoreCase))
+                        {
+                            WriteLine("Enter a new name to create a new file");
+                            Write("New name:");
+                            string newname = ReadLine();
+                            path = Path.GetDirectoryName(path);
+                            path = path + "/" + newname + ".txt";
+                            WriteLine(path);
+                            writeandreadtofile(Dept, sem, temp, CPCSE, grade, score, GPA, path);
+
+
+
+                        }
+
+                    }
+                    else
+                    {
+                        writeandreadtofile(Dept, sem, temp, CPCSE, grade, score, GPA, path);
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    // Let the user know what went wrong.
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
+                Console.ReadKey();
+            }
+            else
+            {
+
+            }
+
+            return null;
         }
 
-        private static void getinput(out string Dept, out string sem)
+        private static void writeandreadtofile(string Dept, string sem, ArrayList temp, float[] CPCSE, string[] grade, int[] score, float GPA, string path)
         {
-            string[] Depts = { "CSE", "ECE", "EIE", "CHE", "MEC" };
-            string prompt = "Enter your Department:";
-            //Menu menu = new Menu(prompt,Depts, 0, 0);
-           //menu.DisplayOps();
-            WriteLine("Enter your Dept:");
-            Dept = ReadLine();
-            WriteLine("Enter your Semester:");
-            sem = ReadLine();
+            using (FileStream fs = File.Create(path))
+            {
+                // Add some text to file    
+                byte[] title = new UTF8Encoding(true).GetBytes("Department of " + Dept + "\n");
+                fs.Write(title, 0, title.Length);
+                byte[] author = new UTF8Encoding(true).GetBytes($"Your Semester {sem} GPA is {GPA} \n\n");
+                fs.Write(author, 0, author.Length);
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    byte[] line = new UTF8Encoding(true).GetBytes($"{temp[i]}\nGrade Recieved: {grade[i].ToUpper()} Grade Point: {score[i]} Subject Credit: {CPCSE[i]} \n\n");
+                    fs.Write(line, 0, line.Length);
+                }
+            }
+
+            // Open the stream and read it back.    
+            using (StreamReader sr = File.OpenText(path))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(s);
+                }
+                WriteLine($"Exported successfully!\n path:{path}");
+
+            }
         }
 
-        private static void Getgrade(ArrayList temp, char[] grade, int[] score)
+        public void selected()
         {
+            temp = checkcondition(CSE1, CPCSE1, CSE2, CPCSE2, CSE3, CPCSE3, CSE4, CPCSE4, CSE5, CPCSE5, CSE6, CPCSE6, CSE7, CPCSE7, CSE8, CPCSE8, temp, Dept, sem);
+        }
+
+
+        private static void Getgrade(ArrayList temp, string[] grade, int[] score)
+        {
+            char[] gradetemp = new char[temp.Count];
+
             for (int i = 0; i < temp.Count; i++)
             {
                 //To try again if execption instead of ending execution
@@ -126,7 +212,12 @@ namespace Menutest
                     Write(temp[i] + ": ");
                     try
                     {
-                        grade[i] = Convert.ToChar(ReadLine());
+                        gradetemp[i] = Convert.ToChar(ReadLine());
+                        grade[i] = Convert.ToString(gradetemp[i]);
+                        if (!grade[i].Equals("S", StringComparison.OrdinalIgnoreCase) && !grade[i].Equals("A", StringComparison.OrdinalIgnoreCase) && !grade[i].Equals("B", StringComparison.OrdinalIgnoreCase) && !grade[i].Equals("C", StringComparison.OrdinalIgnoreCase) && !grade[i].Equals("D", StringComparison.OrdinalIgnoreCase) && !grade[i].Equals("E", StringComparison.OrdinalIgnoreCase) && !grade[i].Equals("F", StringComparison.OrdinalIgnoreCase))
+                        {
+                           throw (null);
+                        }
                         break;
                     }
                     catch (Exception)
@@ -150,35 +241,66 @@ namespace Menutest
             }
         }
 
-        private static void GradetoGP(char[] grade, int[] score, int i)
+        private static void GradetoGP(string[] grade, int[] score, int i)
         {
-            switch (grade[i])
+            /* switch (grade[i])
+             {
+                 case 'S':
+                     score[i] = 10;
+                     break;
+                 case 'A':
+                     score[i] = 9;
+                     break;
+                 case 'B':
+                     score[i] = 8;
+                     break;
+                 case 'C':
+                     score[i] = 7;
+                     break;
+                 case 'D':
+                     score[i] = 6;
+                     break;
+                 case 'E':
+                     score[i] = 5;
+                     break;
+                 case 'F':
+                     score[i] = 0;
+                     break;
+                 default:
+                     score[i] = 0;
+                     break;
+             }*/
+            if (grade[i].Equals("S", StringComparison.OrdinalIgnoreCase))
             {
-                case 'S':
-                    score[i] = 10;
-                    break;
-                case 'A':
-                    score[i] = 9;
-                    break;
-                case 'B':
-                    score[i] = 8;
-                    break;
-                case 'C':
-                    score[i] = 7;
-                    break;
-                case 'D':
-                    score[i] = 6;
-                    break;
-                case 'E':
-                    score[i] = 5;
-                    break;
-                case 'F':
-                    score[i] = 0;
-                    break;
-                default:
-                    score[i] = 0;
-                    break;
+                score[i] = 10;
             }
+            else if (grade[i].Equals("A", StringComparison.OrdinalIgnoreCase))
+            {
+                score[i] = 9;
+            }
+            else if (grade[i].Equals("B", StringComparison.OrdinalIgnoreCase))
+            {
+                score[i] = 8;
+            }
+            else if (grade[i].Equals("C", StringComparison.OrdinalIgnoreCase))
+            {
+                score[i] = 7;
+            }
+            else if (grade[i].Equals("D", StringComparison.OrdinalIgnoreCase))
+            {
+                score[i] = 6;
+            }
+            else if (grade[i].Equals("E", StringComparison.OrdinalIgnoreCase))
+            {
+                score[i] = 5;
+            }
+            else if (grade[i].Equals("F", StringComparison.OrdinalIgnoreCase))
+            {
+                score[i] = 0;
+            }
+            else
+                score[i] = 0;
+
         }
     }
 }
