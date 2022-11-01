@@ -132,7 +132,7 @@ namespace Menutest
                             Write("New name:");
                             string newname = ReadLine();
                             path = Path.GetDirectoryName(path);
-                            path = path + "/" + newname + ".txt";
+                            path = path + "" + newname + ".txt";
                             WriteLine(path);
                             writeandreadtofile(Dept, sem, temp, CPCSE, grade, score, GPA, path);
 
@@ -243,33 +243,7 @@ namespace Menutest
 
         private static void GradetoGP(string[] grade, int[] score, int i)
         {
-            /* switch (grade[i])
-             {
-                 case 'S':
-                     score[i] = 10;
-                     break;
-                 case 'A':
-                     score[i] = 9;
-                     break;
-                 case 'B':
-                     score[i] = 8;
-                     break;
-                 case 'C':
-                     score[i] = 7;
-                     break;
-                 case 'D':
-                     score[i] = 6;
-                     break;
-                 case 'E':
-                     score[i] = 5;
-                     break;
-                 case 'F':
-                     score[i] = 0;
-                     break;
-                 default:
-                     score[i] = 0;
-                     break;
-             }*/
+           
             if (grade[i].Equals("S", StringComparison.OrdinalIgnoreCase))
             {
                 score[i] = 10;
